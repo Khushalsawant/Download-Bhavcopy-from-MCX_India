@@ -30,12 +30,10 @@ chrome_options.add_argument('disable-infobars')
 '''
 http://allselenium.info/file-downloads-python-selenium-webdriver/
 '''
-#chrome_options.add_experimental_option("download.prompt_for_download", "false")
 
-#chrome_options.add_experimental_option("download.default_directory","C:/Users/khushal/Downloads/MCX_Datewise")
-
+#C:\Users\khushal\Downloads\MCX_Datewise
 chrome_options.add_experimental_option("prefs", {
-  "download.default_directory": r"C:\Users\khushal\Downloads\MCX_Datewise",
+  "download.default_directory": r"D:\MCX_Datewise",
   "download.prompt_for_download": False,
   "download.directory_upgrade": True,
   "safebrowsing.enabled": True
@@ -50,17 +48,27 @@ driver.get(url_mcx_bhavcopy)
 
 wait = WebDriverWait(driver, 5)
 
+driver.execute_script("document.getElementById('cph_InnerContainerRight_C001_txtDate_hid_val').value = '20190710';")
 
 driver.execute_script("document.getElementById('cph_InnerContainerRight_C001_txtDate_hid_val').type = 'visible';")
+#//input[@id='txtDate']
+#//*[@id='cph_InnerContainerRight_C001_txtDate_hid_val']
 element_mcx_date = driver.find_element_by_xpath("//*[@id='cph_InnerContainerRight_C001_txtDate_hid_val']")
+driver.execute_script('''
+                      var element_mcx_date = arguments[0];
+    var value = arguments[1];
+    element_mcx_date.value = value;
+                      ''', element_mcx_date, '20190709')
 #element_mcx_date = driver.find_element_by_css_selector("input#cph_InnerContainerRight_C001_txtDate_hid_val")
-element_mcx_date.clear()
-element_mcx_date.send_keys("20190710")
-element_mcx_date.send_keys(Keys.RETURN)  
+#element_mcx_date.clear()
+#element_mcx_date.send_keys("20190710")
+#element_mcx_date.send_keys(Keys.RETURN)  
 
 element_show_btn= driver.find_element_by_xpath("//*[@id='btnShowDatewise']")#.click()
 actions.click(element_show_btn)
 actions.perform()
+time.sleep(10)
+
 
 element_csv_download = driver.find_element_by_xpath("//*[@id='cph_InnerContainerRight_C001_lnkExpToCSV']")
 actions.click(element_csv_download)
